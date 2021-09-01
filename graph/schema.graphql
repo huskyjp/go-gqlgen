@@ -1,0 +1,29 @@
+type User {
+  id: ID!
+  username: String!
+  email: String!
+
+  countries: [Countries!]!
+}
+
+type Countries {
+  id: ID!
+  name: String!
+  description: String!
+  user: User!
+}
+
+input NewCountries {
+  name: String!
+  description: String!
+}
+
+# Resolver should define function that returns List<Countries>
+# Query is the root endpoint function of the schema
+type Query {
+  countries: [Countries!]!
+}
+
+type Mutation {
+  createCountries(input: NewCountries!): Countries!
+}
