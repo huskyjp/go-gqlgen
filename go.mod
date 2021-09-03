@@ -3,25 +3,32 @@ module go-gqlgen
 go 1.17
 
 require (
-	github.com/99designs/gqlgen v0.13.0 // indirect
+	github.com/99designs/gqlgen v0.13.0
 	github.com/agnivade/levenshtein v1.0.3 // indirect
-	github.com/cpuguy83/go-md2man/v2 v2.0.0-20190314233015-f79a8a8ca69d // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
-	github.com/hashicorp/golang-lru v0.5.0 // indirect
-	github.com/matryer/moq v0.0.0-20200106131100-75d0ddfc0007 // indirect
-	github.com/mitchellh/mapstructure v0.0.0-20180203102830-a4e142e9c047 // indirect
-	github.com/pkg/errors v0.8.1 // indirect
+	github.com/hashicorp/golang-lru v0.5.1 // indirect
+	github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	github.com/russross/blackfriday/v2 v2.0.1 // indirect
-	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
-	github.com/stretchr/objx v0.1.0 // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
-	github.com/urfave/cli/v2 v2.1.1 // indirect
-	github.com/vektah/dataloaden v0.2.1-0.20190515034641-a19b9a6e7c9e // indirect
-	github.com/vektah/gqlparser/v2 v2.1.0 // indirect
+	github.com/stretchr/testify v1.7.0
+	github.com/vektah/gqlparser/v2 v2.1.0
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5
-	golang.org/x/tools v0.0.0-20200114235610-7ae403b6b589 // indirect
-	gopkg.in/yaml.v2 v2.2.4 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
+
+require (
+	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
+	github.com/jackc/pgconn v1.10.0 // indirect
+	github.com/jackc/pgio v1.0.0 // indirect
+	github.com/jackc/pgpassfile v1.0.0 // indirect
+	github.com/jackc/pgproto3/v2 v2.1.1 // indirect
+	github.com/jackc/pgservicefile v0.0.0-20200714003250-2b9c44734f2b // indirect
+	github.com/jackc/pgtype v1.8.1 // indirect
+	github.com/jackc/pgx/v4 v4.13.0
+	github.com/jackc/puddle v1.1.3 // indirect
+	github.com/joho/godotenv v1.3.0
+	github.com/pkg/errors v0.9.1 // indirect
+	golang.org/x/text v0.3.6 // indirect
+)
+
+require gopkg.in/yaml.v2 v2.2.8 // indirect
