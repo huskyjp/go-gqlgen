@@ -23,6 +23,7 @@ type AuthRegisterInput struct {
 }
 
 // User Register Response
+// the name is same as graphql
 type AuthRegisterResponse struct {
 	AccessToken string
 	User        User

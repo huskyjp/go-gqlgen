@@ -70,6 +70,9 @@ func (au *AuthService) Register(ctx context.Context, input domain.AuthRegisterIn
 	user.Password = string(cryptedPass)
 
 	user, err = au.UserRepo.GenerateUser(ctx, user)
+	if err != nil {
+		return domain.AuthRegisterResponse{}, fmt.Errorf("error happened when generating user: %v ", err)
+	}
 	return domain.AuthRegisterResponse{
 		AccessToken: "Access Token",
 		User:        user,
