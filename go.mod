@@ -14,6 +14,8 @@ require (
 )
 
 require (
+	github.com/georgysavva/scany v0.2.9
+	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/golang-migrate/migrate/v4 v4.14.1
 	github.com/jackc/chunkreader/v2 v2.0.1 // indirect
 	github.com/jackc/pgconn v1.10.0 // indirect
@@ -31,8 +33,13 @@ require (
 require (
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/google/go-querystring v1.0.0 // indirect
+	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.0 // indirect
+	github.com/hashicorp/golang-lru v0.5.1 // indirect
 	github.com/lib/pq v1.10.2 // indirect
+	github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
+	github.com/stretchr/objx v0.2.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
