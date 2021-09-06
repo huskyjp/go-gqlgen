@@ -2,7 +2,30 @@
 
 package model
 
-type NewCountries struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+import (
+	"time"
+)
+
+type AuthResponse struct {
+	AccessToken string `json:"accessToken"`
+	User        *User  `json:"user"`
+}
+
+type LoginInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type RegisterInput struct {
+	Email           string `json:"email"`
+	Username        string `json:"username"`
+	Password        string `json:"password"`
+	ConfirmPassword string `json:"confirmPassword"`
+}
+
+type User struct {
+	ID        string    `json:"id"`
+	Username  string    `json:"username"`
+	Email     string    `json:"email"`
+	CreatedAt time.Time `json:"createdAt"`
 }
