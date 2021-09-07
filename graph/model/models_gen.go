@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-type AuthResponse struct {
+type AuthRegisterResponse struct {
 	AccessToken string `json:"accessToken"`
 	User        *User  `json:"user"`
 }
@@ -17,10 +17,10 @@ type LoginInput struct {
 }
 
 type RegisterInput struct {
-	Email           string `json:"email"`
-	Username        string `json:"username"`
-	Password        string `json:"password"`
-	ConfirmPassword string `json:"confirmPassword"`
+	Email        string `json:"email"`
+	Username     string `json:"username"`
+	Password     string `json:"password"`
+	AuthPassword string `json:"authPassword"`
 }
 
 type User struct {
