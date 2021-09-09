@@ -16,5 +16,5 @@ migration:
 run:
 	go run main.go
 
-gqlgen_init:
+gqlgen:
 	go run github.com/99designs/gqlgen
