@@ -7,7 +7,10 @@ import (
 	pg "go-gqlgen/database"
 	"go-gqlgen/graph/generated"
 	graph "go-gqlgen/graph/resolver"
+	"go-gqlgen/infrastructure"
+	usecase "go-gqlgen/usecase"
 	"log"
+	"net/http"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -27,6 +30,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// call repository from infrastructure
+	userRepo := infrastructure.NewUserRepository(db) // *infrastructure.UserRepository
+	// call auth service from domain
+	authUsecase := usecase.NewUsecaseAuthImpl(userRepo)
 	// setting router with chi
 
 	r := chi.NewRouter()
@@ -41,11 +48,14 @@ func main() {
 	r.Handle("/query", handler.NewDefaultServer(
 		generated.NewExecutableSchema(
 			generated.Config{
-				Resolvers: &graph.Resolver{},
+				Resolvers: &graph.Resolver{
+					AuthRepository: authUsecase,
+				},
 			},
 		),
 	))
 
 	fmt.Println("GraphQL Server is About to Running....")
+	log.Fatal(http.ListenAndServe(":8080", r))
 
 }
