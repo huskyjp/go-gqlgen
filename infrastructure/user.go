@@ -15,6 +15,12 @@ type UserRepository struct {
 	DB *db.DB
 }
 
+func NewUserRepository(db *db.DB) *UserRepository {
+	return &UserRepository{
+		DB: db,
+	}
+}
+
 func (udb *UserRepository) Create(ctx context.Context, user domain.User) (domain.User, error) {
 	flow, err := udb.DB.Pool.Begin(ctx)
 	if err != nil {
@@ -50,8 +56,13 @@ func createUser(ctx context.Context, flow pgx.Tx, user domain.User) (domain.User
 	return u, nil
 }
 
+// TODO: Implement user generation
+func (udb *UserRepository) GenerateUser(ctx context.Context, user domain.User) (domain.User, error) {
+	return domain.User{}, nil
+}
+
 // function finds user by username
-func (udb *UserRepository) GetByUserName(ctx context.Context, user domain.User) (domain.User, error) {
+func (udb *UserRepository) GetByUserName(ctx context.Context, username string) (domain.User, error) {
 	q := `SELECT * FROM users
 				WHERE username = $1 LIMIT 1;`
 
@@ -67,7 +78,7 @@ func (udb *UserRepository) GetByUserName(ctx context.Context, user domain.User) 
 
 }
 
-func (udb *UserRepository) GetByEmail(ctx context.Context, user domain.User) (domain.User, error) {
+func (udb *UserRepository) GetByEmail(ctx context.Context, email string) (domain.User, error) {
 	q := `SELECT * FROM users
 				WHERE email = $1 LIMIT 1;`
 
