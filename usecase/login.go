@@ -9,29 +9,29 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func (au *AuthService) Login(ctx context.Context, input domain.LoginInput) (domain.AuthRegisterResponse, error) {
+func (au *UsecaseAuthImpl) Login(ctx context.Context, input domain.AuthLoginInput) (domain.AuthLoginResponse, error) {
 
 	input.Initialize()
 
 	if err := input.Validation(); err != nil {
-		return domain.AuthRegisterResponse{}, err
+		return domain.AuthLoginResponse{}, err
 	}
 
-	user, err := au.UserRepo.GetByEmail(ctx, input.Email)
+	user, err := au.userRepository.GetByEmail(ctx, input.Email)
 	if err != nil {
 		switch {
 		case errors.Is(err, apperror.ErrNotFound):
-			return domain.AuthRegisterResponse{}, apperror.ErrNotFoundUserNamePassword
+			return domain.AuthLoginResponse{}, apperror.ErrNotFoundUserNamePassword
 		default:
-			return domain.AuthRegisterResponse{}, err
+			return domain.AuthLoginResponse{}, err
 		}
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(input.Password)); err != nil {
-		return domain.AuthRegisterResponse{}, apperror.ErrNotFoundUserNamePassword
+		return domain.AuthLoginResponse{}, apperror.ErrNotFoundUserNamePassword
 	}
 
-	return domain.AuthRegisterResponse{
+	return domain.AuthLoginResponse{
 		AccessToken: "Login Token",
 		User:        user,
 	}, nil
