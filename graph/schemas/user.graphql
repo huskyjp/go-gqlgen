@@ -11,7 +11,7 @@ input RegisterInput {
   email: String!
   username: String!
   password: String!
-  confirmPassword: String!
+  authPassword: String!
 }
 
 input LoginInput {
@@ -19,7 +19,7 @@ input LoginInput {
   password: String!
 }
 
-type AuthResponse {
+type AuthRegisterResponse {
   accessToken: String!
   user: User!
 }
@@ -30,6 +30,6 @@ extend type Query {
 }
 
 extend type Mutation {
-  register(input: RegisterInput!): AuthResponse!
-  login(input: LoginInput!): AuthResponse!
+  register(input: RegisterInput!): AuthRegisterResponse!
+  login(input: LoginInput!): AuthRegisterResponse!
 }
