@@ -6,17 +6,22 @@ import (
 	"strings"
 )
 
-type LoginInput struct {
+type AuthLoginInput struct {
 	Email    string
 	Password string
 }
 
-func (in *LoginInput) Initialize() {
+type AuthLoginResponse struct {
+	AccessToken string
+	User        User
+}
+
+func (in *AuthLoginInput) Initialize() {
 	in.Email = strings.TrimSpace(in.Email)
 	in.Email = strings.ToLower(in.Email)
 }
 
-func (in LoginInput) Validation() error {
+func (in AuthLoginInput) Validation() error {
 	if !emailRegexp.MatchString(in.Email) {
 		return fmt.Errorf("%w: that is not email - please recheck your email", apperror.ErrValidation)
 	}

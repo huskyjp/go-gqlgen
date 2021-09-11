@@ -43,7 +43,7 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
-	AuthResponse struct {
+	AuthRegisterResponse struct {
 		AccessToken func(childComplexity int) int
 		User        func(childComplexity int) int
 	}
@@ -66,8 +66,8 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	Register(ctx context.Context, input model.RegisterInput) (*model.AuthResponse, error)
-	Login(ctx context.Context, input model.LoginInput) (*model.AuthResponse, error)
+	Register(ctx context.Context, input model.RegisterInput) (*model.AuthRegisterResponse, error)
+	Login(ctx context.Context, input model.LoginInput) (*model.AuthRegisterResponse, error)
 }
 type QueryResolver interface {
 	Me(ctx context.Context) (*model.User, error)
@@ -88,19 +88,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
-	case "AuthResponse.accessToken":
-		if e.complexity.AuthResponse.AccessToken == nil {
+	case "AuthRegisterResponse.accessToken":
+		if e.complexity.AuthRegisterResponse.AccessToken == nil {
 			break
 		}
 
-		return e.complexity.AuthResponse.AccessToken(childComplexity), true
+		return e.complexity.AuthRegisterResponse.AccessToken(childComplexity), true
 
-	case "AuthResponse.user":
-		if e.complexity.AuthResponse.User == nil {
+	case "AuthRegisterResponse.user":
+		if e.complexity.AuthRegisterResponse.User == nil {
 			break
 		}
 
-		return e.complexity.AuthResponse.User(childComplexity), true
+		return e.complexity.AuthRegisterResponse.User(childComplexity), true
 
 	case "Mutation.login":
 		if e.complexity.Mutation.Login == nil {
@@ -244,7 +244,7 @@ input RegisterInput {
   email: String!
   username: String!
   password: String!
-  confirmPassword: String!
+  authPassword: String!
 }
 
 input LoginInput {
@@ -252,7 +252,7 @@ input LoginInput {
   password: String!
 }
 
-type AuthResponse {
+type AuthRegisterResponse {
   accessToken: String!
   user: User!
 }
@@ -263,8 +263,8 @@ extend type Query {
 }
 
 extend type Mutation {
-  register(input: RegisterInput!): AuthResponse!
-  login(input: LoginInput!): AuthResponse!
+  register(input: RegisterInput!): AuthRegisterResponse!
+  login(input: LoginInput!): AuthRegisterResponse!
 }
 `, BuiltIn: false},
 	{Name: "federation/directives.graphql", Input: `
@@ -367,7 +367,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _AuthResponse_accessToken(ctx context.Context, field graphql.CollectedField, obj *model.AuthResponse) (ret graphql.Marshaler) {
+func (ec *executionContext) _AuthRegisterResponse_accessToken(ctx context.Context, field graphql.CollectedField, obj *model.AuthRegisterResponse) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -375,7 +375,7 @@ func (ec *executionContext) _AuthResponse_accessToken(ctx context.Context, field
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:     "AuthResponse",
+		Object:     "AuthRegisterResponse",
 		Field:      field,
 		Args:       nil,
 		IsMethod:   false,
@@ -402,7 +402,7 @@ func (ec *executionContext) _AuthResponse_accessToken(ctx context.Context, field
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _AuthResponse_user(ctx context.Context, field graphql.CollectedField, obj *model.AuthResponse) (ret graphql.Marshaler) {
+func (ec *executionContext) _AuthRegisterResponse_user(ctx context.Context, field graphql.CollectedField, obj *model.AuthRegisterResponse) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -410,7 +410,7 @@ func (ec *executionContext) _AuthResponse_user(ctx context.Context, field graphq
 		}
 	}()
 	fc := &graphql.FieldContext{
-		Object:     "AuthResponse",
+		Object:     "AuthRegisterResponse",
 		Field:      field,
 		Args:       nil,
 		IsMethod:   false,
@@ -474,9 +474,9 @@ func (ec *executionContext) _Mutation_register(ctx context.Context, field graphq
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.AuthResponse)
+	res := resTmp.(*model.AuthRegisterResponse)
 	fc.Result = res
-	return ec.marshalNAuthResponse2ᚖgoᚑgqlgenᚋgraphᚋmodelᚐAuthResponse(ctx, field.Selections, res)
+	return ec.marshalNAuthRegisterResponse2ᚖgoᚑgqlgenᚋgraphᚋmodelᚐAuthRegisterResponse(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -516,9 +516,9 @@ func (ec *executionContext) _Mutation_login(ctx context.Context, field graphql.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.AuthResponse)
+	res := resTmp.(*model.AuthRegisterResponse)
 	fc.Result = res
-	return ec.marshalNAuthResponse2ᚖgoᚑgqlgenᚋgraphᚋmodelᚐAuthResponse(ctx, field.Selections, res)
+	return ec.marshalNAuthRegisterResponse2ᚖgoᚑgqlgenᚋgraphᚋmodelᚐAuthRegisterResponse(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_me(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -1909,11 +1909,11 @@ func (ec *executionContext) unmarshalInputRegisterInput(ctx context.Context, obj
 			if err != nil {
 				return it, err
 			}
-		case "confirmPassword":
+		case "authPassword":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("confirmPassword"))
-			it.ConfirmPassword, err = ec.unmarshalNString2string(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("authPassword"))
+			it.AuthPassword, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -1931,24 +1931,24 @@ func (ec *executionContext) unmarshalInputRegisterInput(ctx context.Context, obj
 
 // region    **************************** object.gotpl ****************************
 
-var authResponseImplementors = []string{"AuthResponse"}
+var AuthRegisterResponseImplementors = []string{"AuthRegisterResponse"}
 
-func (ec *executionContext) _AuthResponse(ctx context.Context, sel ast.SelectionSet, obj *model.AuthResponse) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, authResponseImplementors)
+func (ec *executionContext) _AuthRegisterResponse(ctx context.Context, sel ast.SelectionSet, obj *model.AuthRegisterResponse) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, AuthRegisterResponseImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("AuthResponse")
+			out.Values[i] = graphql.MarshalString("AuthRegisterResponse")
 		case "accessToken":
-			out.Values[i] = ec._AuthResponse_accessToken(ctx, field, obj)
+			out.Values[i] = ec._AuthRegisterResponse_accessToken(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "user":
-			out.Values[i] = ec._AuthResponse_user(ctx, field, obj)
+			out.Values[i] = ec._AuthRegisterResponse_user(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -2327,18 +2327,18 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAuthResponse2goᚑgqlgenᚋgraphᚋmodelᚐAuthResponse(ctx context.Context, sel ast.SelectionSet, v model.AuthResponse) graphql.Marshaler {
-	return ec._AuthResponse(ctx, sel, &v)
+func (ec *executionContext) marshalNAuthRegisterResponse2goᚑgqlgenᚋgraphᚋmodelᚐAuthRegisterResponse(ctx context.Context, sel ast.SelectionSet, v model.AuthRegisterResponse) graphql.Marshaler {
+	return ec._AuthRegisterResponse(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAuthResponse2ᚖgoᚑgqlgenᚋgraphᚋmodelᚐAuthResponse(ctx context.Context, sel ast.SelectionSet, v *model.AuthResponse) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthRegisterResponse2ᚖgoᚑgqlgenᚋgraphᚋmodelᚐAuthRegisterResponse(ctx context.Context, sel ast.SelectionSet, v *model.AuthRegisterResponse) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
 		}
 		return graphql.Null
 	}
-	return ec._AuthResponse(ctx, sel, v)
+	return ec._AuthRegisterResponse(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {

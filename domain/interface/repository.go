@@ -10,7 +10,7 @@ import (
 
 type AuthRepository interface {
 	Register(ctx context.Context, input domain.AuthRegisterInput) (domain.AuthRegisterResponse, error)
-	Login(ctx context.Context, input domain.LoginInput) (domain.AuthRegisterResponse, error)
+	Login(ctx context.Context, input domain.AuthLoginInput) (domain.AuthLoginResponse, error)
 }
 
 type UserRepository interface {
