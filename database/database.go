@@ -34,15 +34,14 @@ func New(ctx context.Context, config *config.Config) *DB {
 
 	db.Open(ctx)
 	return db
-
 }
 
 func (db *DB) Open(ctx context.Context) {
-
 	if err := db.Pool.Ping(ctx); err != nil {
 		log.Fatal("can't open postgres: %")
 	}
 
+	log.Println("connected to postgres")
 }
 
 func (db *DB) Migration() error {

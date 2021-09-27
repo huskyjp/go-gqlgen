@@ -22,7 +22,7 @@ func NewUsecaseAuthImpl(userRepository repository.UserRepository) *UsecaseAuthIm
 }
 
 // サーバーに登録するのでUsecaseに入れる
-func (au *UsecaseAuthImpl) Register(ctx context.Context, input domain.AuthRegisterInput) (domain.AuthRegisterResponse, error) {
+func (ur *UsecaseAuthImpl) Register(ctx context.Context, input domain.AuthRegisterInput) (domain.AuthRegisterResponse, error) {
 	// check
 	input.Initialize()
 
@@ -32,12 +32,12 @@ func (au *UsecaseAuthImpl) Register(ctx context.Context, input domain.AuthRegist
 	}
 
 	// check if username is still available
-	_, err := au.userRepository.GetByUserName(ctx, input.Username)
+	_, err := ur.userRepository.GetByUserName(ctx, input.Username)
 	if err != nil {
 		return domain.AuthRegisterResponse{}, apperror.ErrUserNameIsTaken
 	}
 	// check if email is still available
-	if _, err := au.userRepository.GetByEmail(ctx, input.Email); !errors.Is(err, apperror.ErrNotFound) {
+	if _, err := ur.userRepository.GetByEmail(ctx, input.Email); !errors.Is(err, apperror.ErrNotFound) {
 		return domain.AuthRegisterResponse{}, apperror.ErrEmailIsTaken
 	}
 
@@ -55,7 +55,7 @@ func (au *UsecaseAuthImpl) Register(ctx context.Context, input domain.AuthRegist
 
 	user.Password = string(cryptedPass)
 
-	user, err = au.userRepository.GenerateUser(ctx, user)
+	user, err = ur.userRepository.GenerateUser(ctx, user)
 	if err != nil {
 		return domain.AuthRegisterResponse{}, fmt.Errorf("error happened when generating user: %v ", err)
 	}

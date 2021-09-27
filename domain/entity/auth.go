@@ -29,10 +29,10 @@ type AuthRegisterResponse struct {
 	User        User
 }
 
-func (auth *AuthRegisterInput) Initialize() {
+func (input *AuthRegisterInput) Initialize() {
 	// remove space
-	auth.Email = strings.TrimSpace(auth.Email)
-	auth.Email = strings.ToLower(auth.Email)
+	input.Email = strings.TrimSpace(input.Email)
+	input.Email = strings.ToLower(input.Email)
 
 }
 
