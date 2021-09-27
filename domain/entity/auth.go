@@ -15,7 +15,7 @@ var (
 var emailRegexp = regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
 
 // User Input
-type AuthRegisterInput struct {
+type RegisterInput struct {
 	Email        string
 	Username     string
 	Password     string
@@ -24,19 +24,19 @@ type AuthRegisterInput struct {
 
 // User Register Response
 // the name is same as graphql
-type AuthRegisterResponse struct {
+type RegisterResponse struct {
 	AccessToken string
 	User        User
 }
 
-func (input *AuthRegisterInput) Initialize() {
+func (input *RegisterInput) Initialize() {
 	// remove space
 	input.Email = strings.TrimSpace(input.Email)
 	input.Email = strings.ToLower(input.Email)
 
 }
 
-func (auth AuthRegisterInput) Validation() error {
+func (auth RegisterInput) Validation() error {
 
 	if len(auth.Username) < UserNameMinLength || !emailRegexp.MatchString(auth.Email) || len(auth.Password) < PasswordMinLength || auth.Password != auth.AuthPassword {
 		return errors.New("validation errror when registration - you may want to fix email or password")

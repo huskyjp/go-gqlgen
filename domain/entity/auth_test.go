@@ -10,12 +10,12 @@ func TestAuthRegisterInput_Validation(t *testing.T) {
 
 	test := []struct {
 		name  string
-		input AuthRegisterInput
+		input RegisterInput
 		err   error
 	}{
 		{
 			name: "validation",
-			input: AuthRegisterInput{
+			input: RegisterInput{
 				Username:     "flutter_gopher",
 				Email:        "husky@husky.com",
 				Password:     "password_password",
@@ -24,7 +24,7 @@ func TestAuthRegisterInput_Validation(t *testing.T) {
 			err: nil,
 		}, {
 			name: "error",
-			input: AuthRegisterInput{
+			input: RegisterInput{
 				Username:     "error_graph",
 				Email:        "err@err.com",
 				Password:     "err",

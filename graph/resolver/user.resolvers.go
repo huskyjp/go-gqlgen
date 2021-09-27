@@ -12,7 +12,7 @@ import (
 )
 
 func (r *mutationResolver) Register(ctx context.Context, input model.RegisterInput) (*model.AuthRegisterResponse, error) {
-	res, err := r.AuthRepository.Register(ctx, domain.AuthRegisterInput{
+	res, err := r.AuthRepository.Register(ctx, domain.RegisterInput{
 		Email:        input.Email,
 		Username:     input.Username,
 		Password:     input.Password,
@@ -34,7 +34,7 @@ func (r *queryResolver) Me(ctx context.Context) (*model.User, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 
-func mapAuthRegisterResponse(r domain.AuthRegisterResponse) *model.AuthRegisterResponse {
+func mapAuthRegisterResponse(r domain.RegisterResponse) *model.AuthRegisterResponse {
 	return &model.AuthRegisterResponse{
 		AccessToken: r.AccessToken,
 		User: &model.User{

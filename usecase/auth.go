@@ -22,23 +22,23 @@ func NewUsecaseAuthImpl(userRepository repository.UserRepository) *UsecaseAuthIm
 }
 
 // サーバーに登録するのでUsecaseに入れる
-func (ur *UsecaseAuthImpl) Register(ctx context.Context, input domain.AuthRegisterInput) (domain.AuthRegisterResponse, error) {
+func (ur *UsecaseAuthImpl) Register(ctx context.Context, input domain.RegisterInput) (domain.RegisterResponse, error) {
 	// check
 	input.Initialize()
 
 	// check if validate
 	if err := input.Validation(); err != nil {
-		return domain.AuthRegisterResponse{}, err
+		return domain.RegisterResponse{}, err
 	}
 
 	// check if username is still available
 	_, err := ur.userRepository.GetByUserName(ctx, input.Username)
 	if err != nil {
-		return domain.AuthRegisterResponse{}, apperror.ErrUserNameIsTaken
+		return domain.RegisterResponse{}, apperror.ErrUserNameIsTaken
 	}
 	// check if email is still available
 	if _, err := ur.userRepository.GetByEmail(ctx, input.Email); !errors.Is(err, apperror.ErrNotFound) {
-		return domain.AuthRegisterResponse{}, apperror.ErrEmailIsTaken
+		return domain.RegisterResponse{}, apperror.ErrEmailIsTaken
 	}
 
 	// assign passed input
@@ -50,16 +50,16 @@ func (ur *UsecaseAuthImpl) Register(ctx context.Context, input domain.AuthRegist
 	// hash password
 	cryptedPass, err := bcrypt.GenerateFromPassword([]byte(input.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return domain.AuthRegisterResponse{}, fmt.Errorf("error happened when encrypting password: %v ", err)
+		return domain.RegisterResponse{}, fmt.Errorf("error happened when encrypting password: %v ", err)
 	}
 
 	user.Password = string(cryptedPass)
 
-	user, err = ur.userRepository.GenerateUser(ctx, user)
+	user, err = ur.userRepository.Create(ctx, user)
 	if err != nil {
-		return domain.AuthRegisterResponse{}, fmt.Errorf("error happened when generating user: %v ", err)
+		return domain.RegisterResponse{}, fmt.Errorf("error happened when generating user: %v ", err)
 	}
-	return domain.AuthRegisterResponse{
+	return domain.RegisterResponse{
 		AccessToken: "Access Token",
 		User:        user,
 	}, nil

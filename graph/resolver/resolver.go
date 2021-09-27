@@ -7,7 +7,7 @@ import domain "go-gqlgen/domain/interface"
 // injection with outside of GraphQL such as DB
 type Resolver struct {
 	// access to domain interface so we can access to the actual function
-	AuthRepository domain.AuthRepository // domainのinterfaceと同じFunction名を持つようにする
+	AuthRepository domain.AuthService // domainのinterfaceと同じFunction名を持つようにする
 }
 
 // Resolver.GoはDomainレイヤーとも繋がれる

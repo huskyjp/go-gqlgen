@@ -56,11 +56,6 @@ func createUser(ctx context.Context, flow pgx.Tx, user domain.User) (domain.User
 	return u, nil
 }
 
-// TODO: Implement user generation
-func (udb *UserRepository) GenerateUser(ctx context.Context, user domain.User) (domain.User, error) {
-	return domain.User{}, nil
-}
-
 // function finds user by username
 func (udb *UserRepository) GetByUserName(ctx context.Context, username string) (domain.User, error) {
 	q := `SELECT * FROM users

@@ -1,7 +1,6 @@
 package domain
 
 import (
-	"context"
 	"time"
 )
 
@@ -14,7 +13,7 @@ type User struct {
 	UpdatedAt time.Time
 }
 
-type UserRepository interface {
-	GetByUsername(ctx context.Context, username string) (User, error)
-	GetByEmail(ctx context.Context, email string) (User, error)
-}
+// type UserRepository interface {
+// 	GetByUsername(ctx context.Context, username string) (User, error)
+// 	GetByEmail(ctx context.Context, email string) (User, error)
+// }
